@@ -10,6 +10,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'email_validator'
 gem 'pg', '~> 1.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'ranked-model'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -17,6 +18,8 @@ gem 'puma', '~> 5.0'
 # api
 gem 'jwt'
 gem 'rack-cors'
+gem 'pundit'
+gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -36,6 +39,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 6.0.0'
+  gem 'rubocop-rails', require: false
 end
 
 group :development do

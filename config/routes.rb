@@ -7,5 +7,7 @@ Rails.application.routes.draw do
       post 'login', to: 'auth#login'
       get 'me', to: 'users#me'
     end
+
+    resources :quizzes, only: %i[index show create update destroy]
   end
 end
