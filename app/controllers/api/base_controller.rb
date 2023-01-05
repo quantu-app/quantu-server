@@ -28,6 +28,10 @@ module Api
       render json: { error: message }, status: :unauthorized
     end
 
+    rescue_from(ActiveRecord::RecordNotFound) do |_exception|
+      render json: { error: "resource not found"}, status: :not_found
+    end
+
     def authorize_request
       header = request.headers['Authorization']
       header = header.split(' ').last if header
