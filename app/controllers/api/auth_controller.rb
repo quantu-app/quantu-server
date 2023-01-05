@@ -5,11 +5,11 @@ module Api
     skip_before_action :authorize_request, only: [:login]
 
     def login
-      @user = User.find_by(email: login_params[:email])
+      @user = User.find_by(email: params[:email])
       if @user&.authenticate(params[:password])
         token = QuantU::Utils::JsonWebToken.encode({ user_id: @user.id })
-        time = Time.now + 24.hours.to_i
-        render(json: { token:, exp: time.iso8601, username: @user.username }, status: :ok)
+        exp_time = QuantU::Utils::JsonWebToken.create_expires_at
+        render(json: { token:, exp: exp_time.iso8601, username: @user.username }, status: :ok)
       else
         render(json: { error: 'authenticated failed' }, status: :unauthorized)
       end
@@ -18,7 +18,8 @@ module Api
     private
 
     def login_params
-      params.permit(:email, :password)
+      params.require(:email)
+      params.require(:password)
     end
   end
 end

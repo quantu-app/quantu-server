@@ -12,5 +12,6 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:password_digest] }
 
   # relations
-  has_many :quizzes
+  has_many :quizzes, dependent: :destroy
+  has_many :questions, dependent: :destroy
 end

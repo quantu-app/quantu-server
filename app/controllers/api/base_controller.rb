@@ -32,6 +32,10 @@ module Api
       render json: { error: "resource not found"}, status: :not_found
     end
 
+    rescue_from(ActionDispatch::Http::Parameters::ParseError) do |exception|
+      render json: { error: exception.message }, status: :bad_request
+    end
+
     def authorize_request
       header = request.headers['Authorization']
       header = header.split(' ').last if header

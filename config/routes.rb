@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       get 'me', to: 'users#me'
     end
 
-    resources :quizzes, only: %i[index show create update destroy]
+    resources :quizzes, only: %i[index show create update destroy] do
+      resources :questions, only: %i[index show create update destroy]
+    end
   end
 end
