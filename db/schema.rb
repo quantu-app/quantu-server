@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_05_152848) do
     t.bigint "quiz_id", null: false
     t.string "name", null: false
     t.string "uri", null: false
-    t.integer "position"
+    t.integer "item_order"
     t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_05_152848) do
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.string "uri", null: false
-    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "uri"], name: "index_quizzes_on_user_id_and_uri", unique: true

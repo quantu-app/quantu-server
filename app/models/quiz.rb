@@ -1,9 +1,11 @@
 class Quiz < ApplicationRecord
   # validations
-  include NameAndUri::NameAndUriPresence
   include NameAndUri::UriFormat
-  include NameAndUri::SetUriFromName
   validates :uri, uniqueness: { scope: :user_id }
+  validates :name, :uri, presence: true
+  before_validation do
+    self.uri = name.parameterize if name.present?
+  end
 
   # relations
   belongs_to :user

@@ -12,10 +12,14 @@ RSpec.describe 'API Auth login', type: :request do
         password_confirmation: '123456'
       )
     end
+    let(:headers) {
+      {
+        "Content-Type"=> "application/json"
+      }
+    }
 
     it 'logs in a user when given correct email and password' do
-      post('/api/auth/login', params: { email: user.email, password: '123456' })
-
+      post('/api/auth/login', params: { email: user.email, password: '123456' }, headers: headers, as: :json)
       expect(response).to have_http_status(:ok)
       expect(json['username']).to eq('test')
       expect(json['token']).to_not be_empty
@@ -23,13 +27,13 @@ RSpec.describe 'API Auth login', type: :request do
 
     it 'fails to login a user when given an incorrect email or password' do
       # invalid email
-      post('/api/auth/login', params: { email: 'not-an-email@test.com', password: '123456' })
+      post('/api/auth/login', params: { email: 'not-an-email@test.com', password: '123456' }, headers: headers, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
       expect(json['error']).to eq('authenticated failed')
 
       # invalid password
-      post('/api/auth/login', params: { email: user.email, password: '654321' })
+      post('/api/auth/login', params: { email: user.email, password: '654321' }, headers: headers, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
       expect(json['error']).to eq('authenticated failed')

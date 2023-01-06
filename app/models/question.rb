@@ -1,9 +1,17 @@
 class Question < ApplicationRecord
-  include NameAndUri::NameAndUriPresence
+
+  # validations
   include NameAndUri::UriFormat
   include NameAndUri::GenerateRandomNameAndUri
-  include NameAndUri::SetUriFromName
   validates :uri, uniqueness: { scope: :user_id }
+  validates :name, :uri, presence: true
+  before_validation Proc.new {
+    self.uri = name.parameterize if name.present?
+  }, on: :update
+
+  # plugins
+  include RankedModel
+  ranks :item_order
 
   # relations
   belongs_to :user

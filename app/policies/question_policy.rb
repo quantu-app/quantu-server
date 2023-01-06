@@ -18,6 +18,10 @@ class QuestionPolicy < ApplicationPolicy
     user_owns_question?
   end
 
+  def move?
+    user_owns_question?
+  end
+
   def destroy?
     user_owns_question?
   end

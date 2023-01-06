@@ -27,7 +27,7 @@ RSpec.describe 'API Quizzes', type: :request do
         quizzes = create_list(:quiz, 2, user: user)
         create_list(:quiz, 3, user: user2)
 
-        get("/api/quizzes", headers: headers)
+        get("/api/quizzes", headers: headers, as: :json)
         expect(json.length).to be(2)
         expect(json.map { |x| x["name"] }).to match_array(quizzes.map { |x| x["name"] })
     end
@@ -37,14 +37,14 @@ RSpec.describe 'API Quizzes', type: :request do
     it "returns a quiz that belongs to the user" do
       quiz = create(:quiz, user: user)
 
-      get("/api/quizzes/#{quiz.id}", headers: headers)
+      get("/api/quizzes/#{quiz.id}", headers: headers, as: :json)
       expect(json["id"]).to eq(quiz.id)
     end
 
     it "returns an error when trying to access a quiz that does not belong to the user" do
       quiz = create(:quiz, user: user2)
 
-      get("/api/quizzes/#{quiz.id}", headers: headers)
+      get("/api/quizzes/#{quiz.id}", headers: headers, as: :json)
 
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key("error")

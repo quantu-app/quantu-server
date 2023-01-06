@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     end
 
     resources :quizzes, only: %i[index show create update destroy] do
-      resources :questions, only: %i[index show create update destroy]
+      resources :questions, only: %i[index show create update destroy] do
+        patch :move, on: :member
+      end
     end
   end
 end

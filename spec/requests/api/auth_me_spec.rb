@@ -17,7 +17,7 @@ RSpec.describe 'API Auth me', type: :request do
     end
 
     it 'shows the current user if provided a valid jwt token' do
-      get('/api/auth/me', headers: { 'Authorization' => "Bearer #{jwt_token}" })
+      get('/api/auth/me', headers: { 'Authorization' => "Bearer #{jwt_token}" }, as: :json)
 
       expect(response).to have_http_status(:ok)
       expect(json['username']).to eq('test')
@@ -25,7 +25,7 @@ RSpec.describe 'API Auth me', type: :request do
     end
 
     it 'returns unauthorized if provided an invalid jwt token' do
-      get('/api/auth/me', headers: { 'Authorization' => 'Bearer invalid' })
+      get('/api/auth/me', headers: { 'Authorization' => 'Bearer invalid' }, as: :json )
 
       expect(response).to have_http_status(:unauthorized)
     end

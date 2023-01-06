@@ -3,11 +3,11 @@
 module Api
   class QuestionsController < BaseController
     before_action :set_quiz
-    before_action :set_question, only: %i[show update destroy]
+    before_action :set_question, only: %i[show update move destroy]
 
     def index
       authorize(Question)
-      @questions = @quiz.questions.all
+      @questions = @quiz.questions.rank(:item_order).all
     end
 
     def show
@@ -35,6 +35,16 @@ module Api
       end
     end
 
+    def move
+      authorize(@question)
+      if @question.update(item_order_position: question_params[:item_order_position])
+        @question
+        @other_questions = @quiz.questions.where.not(id: @question.id)
+      else
+        render json: {errors: @question.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+
     def destroy
       authorize(@question)
       @question.destroy
@@ -44,7 +54,7 @@ module Api
     private
 
     def question_params
-      update_params = params.require(:question).permit(:name, :position, data: {})
+      update_params = params.require(:question).permit(:name, :item_order_position, data: {})
     end
 
     def set_quiz

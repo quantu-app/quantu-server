@@ -41,7 +41,7 @@ module Api
     private
 
     def quiz_params
-      update_params = params.require(:quiz).permit(:name, :position)
+      update_params = params.require(:quiz).permit(:name)
     end
 
     def set_quiz
