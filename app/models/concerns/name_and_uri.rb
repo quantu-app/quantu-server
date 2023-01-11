@@ -29,7 +29,7 @@ module NameAndUri
 
         # we have no name or uri so let's generate some random name/uri
         new_uri = loop do
-          random_token = SecureRandom.urlsafe_base64(nil, false).gsub(/[\-=\+\/]/, '').downcase
+          random_token = SecureRandom.urlsafe_base64(nil, false).gsub(/[\-=\+\/\_]/, '').downcase
           break random_token unless self.class.exists?(uri: random_token)
         end
 

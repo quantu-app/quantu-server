@@ -3,8 +3,9 @@ class Quiz < ApplicationRecord
   include NameAndUri::UriFormat
   validates :uri, uniqueness: { scope: :user_id }
   validates :name, :uri, presence: true
+
   before_validation do
-    self.uri = name.parameterize if name.present?
+    self.uri = name.parameterize if name.present? && name_changed?
   end
 
   # relations

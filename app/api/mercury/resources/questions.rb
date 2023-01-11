@@ -1,0 +1,108 @@
+module Mercury
+  module Resources
+    class Questions < API
+      namespace :quizzes do
+        before { authenticate! }
+        after { verify_authorized }
+
+        params do
+          requires :quiz_id, type: Integer
+        end
+        namespace ':quiz_id/questions' do
+          before do
+            @quiz = current_user.quizzes.find(params[:quiz_id])
+            authorize(@quiz, :update?)
+          end
+
+          desc 'List all questions'
+          get do
+            authorize(::Question, :index?)
+            @questions = @quiz.questions.all
+            present(@questions, with: Mercury::Entities::Question)
+          end
+
+          desc 'Create a new question'
+          params do
+            optional :name, type: String
+            optional :item_order_position, type: Integer
+            requires :data, type: JSON
+            requires :question_type, type: String, values: ['flash_card']
+          end
+          post do
+            authorize(::Question, :create?)
+            @question = @quiz.questions.new(params.merge(user: current_user))
+
+            if @question.save
+              present(@question, with: Mercury::Entities::Question)
+            else
+              error!({errors: @question.errors.messages}, 422)
+            end
+          end
+
+          desc 'Show a question'
+          params do
+            requires :id, type: Integer, desc: 'The question ID.'
+          end
+          get ':id' do
+            @question = @quiz.questions.find(params[:id])
+            authorize(@question, :show?)
+            present(@question, with: Mercury::Entities::Question)
+          end
+
+          desc 'Update a question'
+          params do
+            requires :id, type: Integer
+            optional :name, type: String, allow_blank: false
+            optional :item_order_position, type: Integer
+            optional :data, type: JSON
+            optional :question_type, type: String, values: ['flash_card']
+            at_least_one_of :name, :item_order_position, :data, :question_type
+          end
+          patch ':id' do
+            @question = @quiz.questions.find(params[:id])
+            authorize(@question, :update?)
+            if @question.update(params.except(:id))
+              present(@question, with: Mercury::Entities::Question)
+            else
+              error!({errors: @question.errors.full_messages }, 422)
+            end
+          end
+
+          desc 'Move a question to a new position within the ordered questions list'
+          params do
+            requires :id, type: Integer
+            requires :item_order_position, type: Integer
+          end
+          patch ':id/move' do
+            @question = @quiz.questions.find(params[:id])
+            authorize(@question, :move?)
+            if @question.update(item_order_position: params[:item_order_position])
+              @other_questions = @quiz.questions.where.not(id: @question.id)
+              present({
+                moved_question: @question,
+                other_questions: @other_questions
+              }, with: Mercury::Entities::MovedQuestion)
+            else
+              error!({errors: @question.errors.full_messages }, 422)
+            end
+          end
+
+          desc 'Delete a question'
+          params do
+            requires :id, type: Integer
+          end
+          delete ':id' do
+            @question = @quiz.questions.find(params[:id])
+            authorize(@question, :destroy?)
+            @question.destroy
+            body false
+          end
+
+
+
+        end
+
+      end
+    end
+  end
+end

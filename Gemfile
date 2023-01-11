@@ -20,6 +20,8 @@ gem 'jwt'
 gem 'rack-cors'
 gem 'pundit'
 gem 'jbuilder'
+gem 'grape'
+gem 'grape-entity'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -40,6 +42,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails', '~> 6.0.0'
   gem 'rubocop-rails', require: false
+  gem 'grape-swagger'
 end
 
 group :development do

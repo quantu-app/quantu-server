@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  self.inheritance_column = nil
 
   # validations
   include NameAndUri::UriFormat
@@ -6,7 +7,7 @@ class Question < ApplicationRecord
   validates :uri, uniqueness: { scope: :user_id }
   validates :name, :uri, presence: true
   before_validation Proc.new {
-    self.uri = name.parameterize if name.present?
+    self.uri = name.parameterize if name.present? && name_changed?
   }, on: :update
 
   # plugins

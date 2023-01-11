@@ -8,6 +8,7 @@ class CreateQuestions < ActiveRecord::Migration[7.0]
       
       t.string :name, null: false
       t.string :uri, null: false
+      t.string :question_type, null: false
       t.integer :item_order
 
       t.jsonb :data
