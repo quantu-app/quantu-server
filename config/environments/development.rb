@@ -62,6 +62,9 @@ Rails.application.configure do
   # Raise errors on unpermitted parameters
   config.action_controller.action_on_unpermitted_parameters = :raise
 
+  # log level
+  config.log_level = :debug
+
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
