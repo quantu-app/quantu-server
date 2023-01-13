@@ -14,6 +14,24 @@ module Mercury
     mount Mercury::Resources::Quizzes
     mount Mercury::Resources::Questions
 
-    add_swagger_documentation if Rails.env.development?
+    if Rails.env.development?
+      add_swagger_documentation(mount_path: '/docs',
+        info: {
+          title: 'QuantU Services API'
+        },
+        security_definitions: {
+          bearer_auth: {
+            type: 'apiKey',
+            name: 'Authorization',
+            in: 'header'
+          }
+        },
+        security: [
+          { 
+            bearer_auth: []
+          }
+        ]
+      )
+    end
   end
 end

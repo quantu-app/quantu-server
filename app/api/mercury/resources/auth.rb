@@ -5,8 +5,8 @@ module Mercury
 
         desc 'login to fetch a new JWT token'
         params do
-          requires :email, type: String, desc: 'User email'
-          requires :password, type: String, desc: 'User Password'
+          requires :email, type: String, desc: 'User email', documentation: { param_type: 'body' }
+          requires :password, type: String, desc: 'User Password', documentation: { param_type: 'body' }
         end
         post '/login' do
           @user = User.find_by(email: params[:email])
@@ -19,6 +19,7 @@ module Mercury
           end
         end
 
+        before { authenticate! }
         desc 'get the current user'
         get '/me' do
           @user = current_user

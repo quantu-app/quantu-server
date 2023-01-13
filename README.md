@@ -29,6 +29,10 @@ rails s
 
 # run the tests
 rspec
+
+# open up the swagger documentation
+# goto: http://localhost:3000/api-docs
+# login and copy and set the token you get back in the authorize button to `Bearer <token>`.
 ```
 
 ## How To's:

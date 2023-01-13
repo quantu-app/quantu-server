@@ -43,6 +43,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0.0'
   gem 'rubocop-rails', require: false
   gem 'grape-swagger'
+  gem 'grape-swagger-entity', '~> 0.3'
+  gem 'rswag-ui'
 end
 
 group :development do

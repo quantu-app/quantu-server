@@ -14,7 +14,7 @@ module Mercury
 
         desc 'Create a new quiz'
         params do
-          requires :name, type: String, desc: 'Name', allow_blank: false
+          requires :name, type: String, desc: 'Name', allow_blank: false, documentation: { param_type: 'body' }
         end
         post do
           authorize(::Quiz, :create?)
@@ -40,7 +40,7 @@ module Mercury
         desc 'update a quiz'
         params do
           requires :id, type: Integer
-          optional :name, type: String, desc: 'Name', allow_blank: false
+          optional :name, type: String, desc: 'Name', allow_blank: false, documentation: { param_type: 'body' }
         end
         patch ':id' do
           @quiz = Quiz.find(params[:id])
