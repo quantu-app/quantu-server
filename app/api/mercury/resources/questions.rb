@@ -24,7 +24,7 @@ module Mercury
           desc 'Create a new question'
           params do
             optional :name, type: String
-            optional :item_order_position, type: Integer
+            optional :item_order_position, type: Integer, documentation: { param_type: 'body' }
             requires :data, type: JSON
             requires :question_type, type: String, values: ['flash_card']
           end
@@ -52,7 +52,7 @@ module Mercury
           desc 'Update a question'
           params do
             requires :id, type: Integer
-            optional :name, type: String, allow_blank: false
+            optional :name, type: String, allow_blank: false, documentation: { param_type: 'body' }
             optional :item_order_position, type: Integer
             optional :data, type: JSON
             optional :question_type, type: String, values: ['flash_card']
@@ -71,7 +71,7 @@ module Mercury
           desc 'Move a question to a new position within the ordered questions list'
           params do
             requires :id, type: Integer
-            requires :item_order_position, type: Integer
+            requires :item_order_position, type: Integer, documentation: { param_type: 'body' }
           end
           patch ':id/move' do
             @question = @quiz.questions.find(params[:id])
