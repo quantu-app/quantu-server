@@ -11,7 +11,7 @@ docker run --rm -d --name quantu-postgres \
     -p 5432:5432 \
     -e POSTGRES_PASSWORD=postgres \
     -e PGDATA=/var/lib/postgresql/data/pgdata \
-	-v ${pwd}/postgresql:/var/lib/postgresql/data \
+	-v $(pwd)/postgresql:/var/lib/postgresql/data \
     postgres:15-alpine3.17
 
 # create the local database dev and test databases
