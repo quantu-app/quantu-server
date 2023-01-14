@@ -57,8 +57,8 @@ RSpec.describe 'Quizzes API', type: :request do
       get("/api/quizzes/#{quiz.id}", headers: headers, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
-      expect(json).to have_key("error")
-      expect(json["error"]).to eq("You cannot perform this action.")
+      expect(json).to have_key("errors")
+      expect(json["errors"]).to eq(["You cannot perform this action."])
     end
   end
 

@@ -30,13 +30,13 @@ RSpec.describe 'API Auth login', type: :request do
       post('/api/auth/login', params: { email: 'not-an-email@test.com', password: '123456' }, headers: headers, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
-      expect(json['error']).to eq('authentication failed')
+      expect(json['errors']).to eq(['authentication failed'])
 
       # invalid password
       post('/api/auth/login', params: { email: user.email, password: '654321' }, headers: headers, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
-      expect(json['error']).to eq('authentication failed')
+      expect(json['errors']).to eq(['authentication failed'])
     end
   end
 end

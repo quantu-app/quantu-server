@@ -72,8 +72,8 @@ RSpec.describe 'Questions API', type: :request do
       get("/api/quizzes/#{quiz2.id}/questions/#{question2.id}", headers: headers, as: :json)
 
       expect(response).to have_http_status(:not_found)
-      expect(json).to have_key("error")
-      expect(json["error"]).to eq("resource not found")
+      expect(json).to have_key("errors")
+      expect(json["errors"]).to eq(["resource not found"])
     end
   end
 

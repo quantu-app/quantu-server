@@ -14,14 +14,24 @@ module Mercury
             authorize(@quiz, :update?)
           end
 
-          desc 'List all questions'
+          desc 'List all questions belonging to a Quiz', 
+            is_array: true,
+            success: { code: 200, model: Mercury::Entities::Question },
+            failure: [
+              { code: 401, model: Mercury::Entities::ErrorResponse }
+            ]
           get do
             authorize(::Question, :index?)
             @questions = @quiz.questions.all
             present(@questions, with: Mercury::Entities::Question)
           end
 
-          desc 'Create a new question'
+          desc 'Create a new question',
+            success: { code: 201, model: Mercury::Entities::Question },
+            failure: [
+              { code: 401, model: Mercury::Entities::ErrorResponse },
+              { code: 422, model: Mercury::Entities::ErrorResponse },
+            ]
           params do
             optional :name, type: String
             optional :item_order_position, type: Integer, documentation: { param_type: 'body' }
@@ -33,13 +43,18 @@ module Mercury
             @question = @quiz.questions.new(params.merge(user: current_user))
 
             if @question.save
-              present(@question, with: Mercury::Entities::Question)
+              present(@question, with: Mercury::Entities::Question, status: 201)
             else
               error!({errors: @question.errors.messages}, 422)
             end
           end
 
-          desc 'Show a question'
+          desc 'Show a Question',
+          success: { code: 200, model: Mercury::Entities::Question },
+          failure: [
+            { code: 401, model: Mercury::Entities::ErrorResponse },
+            { code: 404, model: Mercury::Entities::ErrorResponse }
+          ]
           params do
             requires :id, type: Integer, desc: 'The question ID.'
           end
@@ -49,7 +64,13 @@ module Mercury
             present(@question, with: Mercury::Entities::Question)
           end
 
-          desc 'Update a question'
+          desc 'Update a Question',
+            success: { code: 200, model: Mercury::Entities::Question },
+            failure: [
+              { code: 401, model: Mercury::Entities::ErrorResponse },
+              { code: 404, model: Mercury::Entities::ErrorResponse },
+              { code: 422, model: Mercury::Entities::ErrorResponse }
+            ]
           params do
             requires :id, type: Integer
             optional :name, type: String, allow_blank: false, documentation: { param_type: 'body' }
@@ -68,7 +89,13 @@ module Mercury
             end
           end
 
-          desc 'Move a question to a new position within the ordered questions list'
+          desc 'Move a Question to a new position within the ordered questions list',
+            success: { code: 200, model: Mercury::Entities::MovedQuestion },
+            failure: [
+              { code: 401, model: Mercury::Entities::ErrorResponse },
+              { code: 404, model: Mercury::Entities::ErrorResponse },
+              { code: 422, model: Mercury::Entities::ErrorResponse }
+            ]
           params do
             requires :id, type: Integer
             requires :item_order_position, type: Integer, documentation: { param_type: 'body' }
@@ -87,7 +114,12 @@ module Mercury
             end
           end
 
-          desc 'Delete a question'
+          desc 'Delete a Question',
+            success: { code: 200 },
+            failure: [
+              { code: 401, model: Mercury::Entities::ErrorResponse },
+              { code: 404, model: Mercury::Entities::ErrorResponse }
+            ]
           params do
             requires :id, type: Integer
           end
