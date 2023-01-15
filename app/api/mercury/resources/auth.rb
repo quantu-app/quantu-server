@@ -17,7 +17,7 @@ module Mercury
           if @user&.authenticate(params[:password])
             token = QuantU::Utils::JsonWebToken.encode({ user_id: @user.id })
             exp_time = QuantU::Utils::JsonWebToken.create_expires_at
-            present({token:, exp: exp_time.iso8601}, with: Mercury::Entities::Token)
+            present({token:, expires_at: exp_time}, with: Mercury::Entities::Token)
           else
             error!({ errors: ['authentication failed'] }, 401)
           end

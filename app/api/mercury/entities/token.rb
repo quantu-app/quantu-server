@@ -1,8 +1,16 @@
 module Mercury
   module Entities
     class Token < Grape::Entity
-      expose :token, documentation: { type: 'string', required: true }
-      expose :exp, documentation: { type: 'integer', required: true }
+      def self.entity_name; 'Token'; end
+
+      format_with(:iso_timestamp) { |dt| dt.iso8601 }
+
+      expose :token, documentation: { desc: 'Token', type: 'string', required: true }
+
+      with_options(format_with: :iso_timestamp) do
+        expose :expires_at, documentation: { desc: "Expiration Date", type: 'string', format: 'date-time', required: true }
+      end
+      
     end
   end
 end

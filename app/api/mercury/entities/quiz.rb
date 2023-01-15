@@ -1,15 +1,17 @@
 module Mercury
   module Entities
     class Quiz < Grape::Entity
+      def self.entity_name; 'Quiz'; end
+
       format_with(:iso_timestamp) { |dt| dt.iso8601 }
 
-      expose :id, documentation: { type: 'integer', required: true }
-      expose :name, documentation: { type: 'string', required: true }
-      expose :uri, documentation: { type: 'string', required: true }
+      expose :id, documentation: { desc: 'ID', type: 'Integer', required: true }
+      expose :name, documentation: { desc: 'Name', type: 'String', required: true}
+      expose :uri, documentation: { desc: 'URI', type: 'String', format: 'uri', required: true }
       
       with_options(format_with: :iso_timestamp) do
-        expose :created_at, documentation: { type: 'string', format: 'date-time', required: true }
-        expose :updated_at, documentation: { type: 'string', format: 'date-time', required: true }
+        expose :created_at, documentation: { type: 'String', format: 'date-time', required: true }
+        expose :updated_at, documentation: { type: 'String', format: 'date-time', required: true }
       end
     end
   end
