@@ -39,10 +39,11 @@ jobs:
       - name: Bundle install
         run: |
           bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          bundle install --jobs 4
 
       - name: Run tests with RSpec
         env:
+          SECRET_KEY: f6b6daea12018f0afc969ea7e88ec38bb6e5441bb9c4e514177756bca36da4cb536ad4b75a87a6136c8bc227ec9598033fd2052bcebc4a9de398cdf218c0c582
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/quantu_server_test
         run: |
