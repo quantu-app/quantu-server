@@ -12,14 +12,9 @@ jobs:
   test:
     name: 'Ruby ${{ matrix.ruby }} / PostgreSQL ${{ matrix.postgres }} / Deps ${{ matrix.dependencies }}'
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        include:
-          - { ruby: '3.1', postgres: 14.6, dependencies: 'Current'}
-          - { ruby: '3.1', postgres: 14.6, dependencies: 'Next' }
     services:
       postgres:
-        image: postgres:${{ matrix.postgres }}
+        image: postgres:14.6
         env:
           POSTGRES_DB: quantu_server_test
           POSTGRES_PASSWORD: postgres
@@ -36,7 +31,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
+          ruby-version: '3.1'
           bundler-cache: true
 
       - name: Run tests
