@@ -41,10 +41,12 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 6.0.0'
-  gem 'rubocop-rails', require: false
   gem 'grape-swagger'
   gem 'grape-swagger-entity', '~> 0.3'
   gem 'rswag-ui'
+
+  # performance  tools
+  gem 'bullet'
 end
 
 group :development do
@@ -52,10 +54,13 @@ group :development do
   gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
+  gem 'rack-mini-profiler', require: false
+  gem 'memory_profiler'
+  gem 'stackprof'
 
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :test do
