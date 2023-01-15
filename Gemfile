@@ -71,7 +71,6 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
   gem 'factory_bot_rails'
 
-  gem 'simplecov'
-  gem 'simplecov-lcov'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', '~> 0.26.0', require: false
+  gem 'simplecov-lcov', '~> 0.8.0', require: false
 end
