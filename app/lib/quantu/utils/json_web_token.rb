@@ -3,7 +3,7 @@
 module QuantU
   module Utils
     class JsonWebToken
-      SECRET_KEY ||= ENV["SECRET_KEY"]
+      SECRET_KEY ||= ENV.fetch("SECRET_KEY")
       DEFAULT_EXPIRES_AT ||= 24.hours
 
       def self.encode(payload, exp = 24.hours.from_now)
