@@ -1,5 +1,8 @@
 # QuantU Web Service
 
+## Metrics
+[![Coverage Status](https://coveralls.io/repos/github/quantu-app/quantu-server/badge.svg?branch=master)](https://coveralls.io/github/quantu-app/quantu-server?branch=master)
+
 ## Setup & Installation
 
 ```bash

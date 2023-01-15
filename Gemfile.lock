@@ -287,6 +287,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    simplecov-lcov (0.7.0)
     stackprof (0.2.23)
     sync (0.5.0)
     term-ansicolor (1.7.1)
@@ -345,6 +346,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   shoulda-matchers (~> 5.0)
+  simplecov
+  simplecov-lcov
   stackprof
   tzinfo-data
   web-console
