@@ -6,8 +6,8 @@ RSpec.describe 'API Auth login', type: :request do
   describe 'POST /api/auth/login' do
     let(:user) do
       User.create(
-        username: 'test',
-        email: 'test@test.com',
+        username: 'test2',
+        email: 'test2@test2.com',
         password: '123456',
         password_confirmation: '123456'
       )

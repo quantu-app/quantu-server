@@ -5,13 +5,13 @@ require 'rails_helper'
 RSpec.describe 'Quizzes API', type: :request do
   let(:user) do
     User.create(
-      username: 'test',
-      email: 'test@test.com',
+      username: 'test4',
+      email: 'test4@test4.com',
       password: '123456',
       password_confirmation: '123456'
     )
   end
-  let(:user2) { create(:user, username: 'seconduser') }
+  let(:user2) { create(:user, username: 'seconduser4') }
   let(:jwt_token) do
     QuantU::Utils::JsonWebToken.encode({ user_id: user.id })
   end
