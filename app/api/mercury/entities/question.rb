@@ -8,7 +8,7 @@ module Mercury
       expose :id, documentation: { type: 'Integer', desc: 'ID', required: true }
       expose :name, documentation: { type: 'String', desc: 'Name', required: true }
       expose :uri, documentation: { type: 'String', desc: 'URI', format: 'uri', required: true }
-      expose :question_type, documentation: { type: 'string', values: %w[flash_card], , required: true, desc: 'Type of Question' }
+      expose :question_type, documentation: { type: 'string', values: %w[flash_card], required: true, desc: 'Type of Question' }
       expose :item_order, documentation: { type: 'Integer', desc: 'Item Order', required: true }
       expose :data, documentation: { type: 'object', desc: 'Data', required: true }
       
