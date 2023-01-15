@@ -23,6 +23,7 @@ jobs:
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/quantu_server_test
       RAILS_ENV: test
+      JWT_EXPIRES_AT: "4838400"
 
     steps:
       - name: Checkout code
