@@ -14,10 +14,19 @@ RSpec.describe User, type: :model do
 
   context 'validations' do
     it { should have_secure_password }
+    it { should validate_length_of(:password).is_at_least(6).on(:create) }
+    it { should validate_confirmation_of(:password) }
+    it { should validate_length_of(:username).is_at_least(3) }
+    it {
+      # we have to have a valid user in the database, this is what build(:user) does.
+      user = build(:user)
+      expect(user).to validate_uniqueness_of(:email)
+      expect(user).to validate_uniqueness_of(:username)
+    }
   end
 
   context 'relations' do
-    it { should have_many(:quizzes) }
-    it { should have_many(:questions) }
+    it { should have_many(:quizzes).dependent(:destroy) }
+    it { should have_many(:questions).dependent(:destroy) }
   end
 end
