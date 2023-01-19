@@ -3,7 +3,7 @@ module Mercury
     class Auth < API
       namespace :auth do
 
-        desc 'login to fetch a new JWT token', 
+        desc 'Login and return a new JWT access token',
           success: { code: 200, model: Mercury::Entities::Token },
           failure: [
             { code: 401, model: Mercury::Entities::ErrorResponse }
