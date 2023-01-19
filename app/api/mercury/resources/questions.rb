@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mercury
   module Resources
     class Questions < API
@@ -14,12 +16,12 @@ module Mercury
             authorize(@quiz, :update?)
           end
 
-          desc 'List all questions belonging to a Quiz', 
-            is_array: true,
-            success: { code: 200, model: Mercury::Entities::Question },
-            failure: [
-              { code: 401, model: Mercury::Entities::ErrorResponse }
-            ]
+          desc 'List all questions belonging to a Quiz',
+               is_array: true,
+               success: { code: 200, model: Mercury::Entities::Question },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse }
+               ]
           get do
             authorize(::Question, :index?)
             @questions = @quiz.questions.all
@@ -27,11 +29,11 @@ module Mercury
           end
 
           desc 'Create a new question',
-            success: { code: 201, model: Mercury::Entities::Question },
-            failure: [
-              { code: 401, model: Mercury::Entities::ErrorResponse },
-              { code: 422, model: Mercury::Entities::ErrorResponse },
-            ]
+               success: { code: 201, model: Mercury::Entities::Question },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse },
+                 { code: 422, model: Mercury::Entities::ErrorResponse }
+               ]
           params do
             optional :name, type: String
             optional :item_order_position, type: Integer, documentation: { param_type: 'body' }
@@ -45,16 +47,16 @@ module Mercury
             if @question.save
               present(@question, with: Mercury::Entities::Question, status: 201)
             else
-              error!({errors: @question.errors.messages}, 422)
+              error!({ errors: @question.errors.messages }, 422)
             end
           end
 
           desc 'Show a Question',
-          success: { code: 200, model: Mercury::Entities::Question },
-          failure: [
-            { code: 401, model: Mercury::Entities::ErrorResponse },
-            { code: 404, model: Mercury::Entities::ErrorResponse }
-          ]
+               success: { code: 200, model: Mercury::Entities::Question },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse },
+                 { code: 404, model: Mercury::Entities::ErrorResponse }
+               ]
           params do
             requires :id, type: Integer, desc: 'The question ID.'
           end
@@ -65,12 +67,12 @@ module Mercury
           end
 
           desc 'Update a Question',
-            success: { code: 200, model: Mercury::Entities::Question },
-            failure: [
-              { code: 401, model: Mercury::Entities::ErrorResponse },
-              { code: 404, model: Mercury::Entities::ErrorResponse },
-              { code: 422, model: Mercury::Entities::ErrorResponse }
-            ]
+               success: { code: 200, model: Mercury::Entities::Question },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse },
+                 { code: 404, model: Mercury::Entities::ErrorResponse },
+                 { code: 422, model: Mercury::Entities::ErrorResponse }
+               ]
           params do
             requires :id, type: Integer
             optional :name, type: String, allow_blank: false, documentation: { param_type: 'body' }
@@ -85,17 +87,17 @@ module Mercury
             if @question.update(params.except(:id))
               present(@question, with: Mercury::Entities::Question)
             else
-              error!({errors: @question.errors.full_messages }, 422)
+              error!({ errors: @question.errors.full_messages }, 422)
             end
           end
 
           desc 'Move a Question to a new position within the ordered questions list',
-            success: { code: 200, model: Mercury::Entities::MovedQuestion },
-            failure: [
-              { code: 401, model: Mercury::Entities::ErrorResponse },
-              { code: 404, model: Mercury::Entities::ErrorResponse },
-              { code: 422, model: Mercury::Entities::ErrorResponse }
-            ]
+               success: { code: 200, model: Mercury::Entities::MovedQuestion },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse },
+                 { code: 404, model: Mercury::Entities::ErrorResponse },
+                 { code: 422, model: Mercury::Entities::ErrorResponse }
+               ]
           params do
             requires :id, type: Integer
             requires :item_order_position, type: Integer, documentation: { param_type: 'body' }
@@ -106,20 +108,20 @@ module Mercury
             if @question.update(item_order_position: params[:item_order_position])
               @other_questions = @quiz.questions.where.not(id: @question.id)
               present({
-                moved_question: @question,
-                other_questions: @other_questions
-              }, with: Mercury::Entities::MovedQuestion)
+                        moved_question: @question,
+                        other_questions: @other_questions
+                      }, with: Mercury::Entities::MovedQuestion)
             else
-              error!({errors: @question.errors.full_messages }, 422)
+              error!({ errors: @question.errors.full_messages }, 422)
             end
           end
 
           desc 'Delete a Question',
-            success: { code: 200 },
-            failure: [
-              { code: 401, model: Mercury::Entities::ErrorResponse },
-              { code: 404, model: Mercury::Entities::ErrorResponse }
-            ]
+               success: { code: 200 },
+               failure: [
+                 { code: 401, model: Mercury::Entities::ErrorResponse },
+                 { code: 404, model: Mercury::Entities::ErrorResponse }
+               ]
           params do
             requires :id, type: Integer
           end
@@ -129,11 +131,7 @@ module Mercury
             @question.destroy
             body false
           end
-
-
-
         end
-
       end
     end
   end

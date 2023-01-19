@@ -4,3 +4,13 @@ require:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  AllowedMethods:
+    - namespace
+
+Metrics/ClassLength:
+  CountAsOne:
+    - array
+    - hash
+    - method_call

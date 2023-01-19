@@ -1,11 +1,12 @@
 FROM ruby:3.2.0-bullseye AS quantu-server
 
 # Libraries
-RUN apt-get update -qq && apt-get install -y postgresql-client
+RUN apt-get update -qq && apt-get install -y postgresql-client less build-essential libffi-dev
 
-# Install Rails
+# Install Gems: Rails, Bundler, Solargraph, Rubocop
 RUN gem update --system
-RUN gem install rails bundler
+RUN gem install rails bundler solargraph
+RUN gem install rubocop rubocop-rails rubocop-performance
 
 # Create default application working directory
 ENV INSTALL_PATH /opt/app

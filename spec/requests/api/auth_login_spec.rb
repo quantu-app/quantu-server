@@ -19,7 +19,10 @@ RSpec.describe 'API Auth login', type: :request do
     }
 
     it 'logs in a user when given correct email and password' do
-      post('/api/auth/login', params: { email: user.email, password: '123456' }, headers: headers, as: :json)
+      post('/api/auth/login', params: {
+        email: user.email,
+        password: '123456'
+      }, headers: headers, as: :json)
       expect(response).to have_http_status(:created)
       expect(json['token']).to_not be_empty
       expect(json['expires_at']).to_not be_empty
