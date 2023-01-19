@@ -10,11 +10,11 @@ on:
 
 jobs:
   test:
-    name: 'Ruby 3.1 / PostgreSQL 14.6'
+    name: 'Ruby 3.2.0 / PostgreSQL 15.1'
     runs-on: ubuntu-20.04
     services:
       postgres:
-        image: postgres:14.6
+        image: postgres:15.1
         env:
           POSTGRES_DB: quantu_server_test
           POSTGRES_PASSWORD: postgres
@@ -33,7 +33,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1.2'
+          ruby-version: '3.2.0'
           bundler-cache: true
 
       - name: Install required apt packages
