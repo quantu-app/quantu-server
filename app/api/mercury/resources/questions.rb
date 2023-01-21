@@ -133,6 +133,23 @@ module Mercury
           end
         end
       end
+
+      namespace :questions do
+        before { authenticate! }
+        after { verify_authorized }
+
+        desc 'List all questions belonging to a User',
+             is_array: true,
+             success: { code: 200, model: Mercury::Entities::Question },
+             failure: [
+               { code: 401, model: Mercury::Entities::ErrorResponse }
+             ]
+        get do
+          authorize(::Question, :index?)
+          @questions = current_user.questions.all
+          present(@questions, with: Mercury::Entities::Question)
+        end
+      end
     end
   end
 end

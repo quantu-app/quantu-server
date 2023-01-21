@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class QuestionPolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -27,6 +26,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   private
+
   def user_owns_question?
     user.questions.exists?(record.id)
   end
