@@ -6,6 +6,7 @@ module Mercury
       format_with(:iso_timestamp) { |dt| dt.iso8601 }
 
       expose :id, documentation: { desc: 'ID', type: 'Integer', required: true }
+      expose :user_id, documentation: { type: 'Integer', desc: 'User Id', required: true }
       expose :name, documentation: { desc: 'Name', type: 'String', required: true}
       expose :uri, documentation: { desc: 'URI', type: 'String', format: 'uri', required: true }
       
