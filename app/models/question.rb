@@ -6,7 +6,7 @@ class Question < ApplicationRecord
   include NameAndUri::GenerateRandomNameAndUri
   validates :uri, uniqueness: { scope: :user_id }
   validates :name, :uri, presence: true
-  before_validation Proc.new {
+  before_validation proc {
     self.uri = name.parameterize if name.present? && name_changed?
   }, on: :update
 
@@ -17,4 +17,5 @@ class Question < ApplicationRecord
   # relations
   belongs_to :user
   belongs_to :quiz
+  has_many :question_results, dependent: :destroy
 end

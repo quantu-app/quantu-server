@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_05_152848) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_24_215728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "learning_sessions", force: :cascade do |t|
+    t.bigint "learnable_id"
+    t.string "learnable_type"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learnable_type", "learnable_id"], name: "index_learning_sessions_on_learnable_type_and_learnable_id"
+    t.index ["user_id"], name: "index_learning_sessions_on_user_id"
+  end
 
   create_table "questions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -47,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_05_152848) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "learning_sessions", "users"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "questions", "users"
   add_foreign_key "quizzes", "users"

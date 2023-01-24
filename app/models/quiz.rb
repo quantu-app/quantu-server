@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Quiz < ApplicationRecord
   # validations
   include NameAndUri::UriFormat
@@ -11,4 +13,5 @@ class Quiz < ApplicationRecord
   # relations
   belongs_to :user
   has_many :questions, dependent: :destroy
+  has_many :learning_sessions, as: :learnable, dependent: :destroy
 end
