@@ -37,7 +37,7 @@ module Mercury
           params do
             optional :name, type: String
             optional :item_order_position, type: Integer, documentation: { param_type: 'body' }
-            requires :data, type: JSON
+            requires :data, type: Object, documentation: { type: 'object' }
             requires :question_type, type: String, values: ['flash_card']
           end
           post do
@@ -77,7 +77,7 @@ module Mercury
             requires :id, type: Integer
             optional :name, type: String, allow_blank: false, documentation: { param_type: 'body' }
             optional :item_order_position, type: Integer
-            optional :data, type: JSON
+            optional :data, type: Object, allow_blank: false, documentation: { type: 'object' }
             optional :question_type, type: String, values: ['flash_card']
             at_least_one_of :name, :item_order_position, :data, :question_type
           end
