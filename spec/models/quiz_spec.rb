@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Quiz, type: :model do
@@ -14,7 +16,7 @@ RSpec.describe Quiz, type: :model do
       it { should allow_value('a-simple-uri').for(:uri) }
       it { should validate_uniqueness_of(:uri).scoped_to(:user_id).case_insensitive }
     end
-  
+
     context 'relations' do
       it { should belong_to(:user) }
       it { should have_many(:questions).dependent(:destroy) }
