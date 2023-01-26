@@ -12,6 +12,7 @@ class Quiz < ApplicationRecord
 
   # relations
   belongs_to :user
-  has_many :questions, dependent: :destroy
+  has_one :learnable_resource, as: :learnable, dependent: :destroy
+  has_many :questions, through: :learnable_resource
   has_many :learning_sessions, as: :learnable, dependent: :destroy
 end

@@ -14,5 +14,5 @@ class User < ApplicationRecord
   # relations
   has_many :quizzes, dependent: :destroy
   has_many :questions, dependent: :destroy
-  has_many :learning_sessions, dependent: :destroy
+  has_many :learnable_resources, dependent: :destroy
 end
