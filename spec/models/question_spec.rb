@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
@@ -5,8 +7,10 @@ RSpec.describe Question, type: :model do
     it { should have_db_column(:name).of_type(:string) }
     it { should have_db_column(:uri).of_type(:string) }
     it { should have_db_column(:question_type).of_type(:string) }
-    it { should have_db_column(:data).of_type(:jsonb) }
     it { should have_db_column(:item_order).of_type(:integer) }
+    it { should have_db_column(:data).of_type(:jsonb) }
+    it { should have_db_column(:user_id).of_type(:integer) }
+    it { should have_db_column(:learnable_resource_id).of_type(:integer) }
     it { should have_db_column(:created_at).of_type(:datetime) }
     it { should have_db_column(:updated_at).of_type(:datetime) }
   end
@@ -21,6 +25,8 @@ RSpec.describe Question, type: :model do
 
   context 'relations' do
     it { should belong_to(:user) }
-    it { should belong_to(:quiz) }
+    it { should belong_to(:learnable_resource) }
+    it { should have_one(:learnable) }
+    it { should have_many(:question_results).dependent(:destroy) }
   end
 end

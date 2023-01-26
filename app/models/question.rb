@@ -19,6 +19,6 @@ class Question < ApplicationRecord
   # relations
   belongs_to :user
   belongs_to :learnable_resource
-  has_one :learnable, through: :learnable_resource
+  has_one :quiz, through: :learnable_resource, source: :learnable, source_type: 'Quiz'
   has_many :question_results, dependent: :destroy
 end
