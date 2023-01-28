@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LearningSession < ApplicationRecord
+class StudySession < ApplicationRecord
   # relations
   belongs_to :user
   belongs_to :learnable_resource

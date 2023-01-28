@@ -27,6 +27,6 @@ RSpec.describe User, type: :model do
   context 'relations' do
     it { should have_many(:quizzes).dependent(:destroy) }
     it { should have_many(:questions).dependent(:destroy) }
-    it { should have_many(:learning_sessions).dependent(:destroy) }
+    it { should have_many(:study_sessions).dependent(:destroy) }
   end
 end

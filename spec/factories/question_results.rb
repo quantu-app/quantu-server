@@ -5,6 +5,6 @@ FactoryBot.define do
     data { { user_response: 42 } }
     association :question
     association :user
-    association :learning_session
+    association :study_session
   end
 end

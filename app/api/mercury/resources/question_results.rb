@@ -35,18 +35,16 @@ module Mercury
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
                                  documentation: { param_type: 'body' }
-          optional :learning_session_id, type: Integer, desc: 'Learning Session ID'
+          optional :study_session_id, type: Integer, desc: 'Learning Session ID'
           requires :data, type: JSON, documentation: { param_type: 'body' }
         end
         post do
           authorize(::QuestionResult, :create?)
           @question = current_user.questions.find(params[:question_id])
-          if params[:learning_session_id]
-            @learning_session = current_user.learning_sessions.find(params[:learning_session_id])
-          end
+          @study_session = current_user.study_sessions.find(params[:study_session_id]) if params[:study_session_id]
           @question_result = @question.question_results.new(
             user: current_user,
-            learning_session: @learning_session,
+            study_session: @study_session,
             data: params[:data]
           )
 

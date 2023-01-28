@@ -11,7 +11,9 @@ module Mercury
       expose :user_id, documentation: { type: 'Integer', desc: 'User Id', required: true }
       expose :name, documentation: { type: 'String', desc: 'Name', required: false }
       expose :uri, documentation: { type: 'String', desc: 'URI', format: 'uri', required: false }
-      expose :quiz_id, documentation: { type: 'Integer', desc: 'Quiz Id', required: true }
+      expose :learnable_resource_id, proc: proc { |r, _options|
+        r.learnable_resource.id
+      }, documentation: { type: 'Integer', desc: 'Learnable Resource Id', required: true }
       expose :question_type,
              documentation: { type: 'string', values: %w[flash_card], required: true, desc: 'Type of Question' }
       expose :item_order, documentation: { type: 'Integer', desc: 'Item Order', required: true }

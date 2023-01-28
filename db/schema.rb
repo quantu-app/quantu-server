@@ -24,25 +24,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_220247) do
     t.index ["user_id"], name: "index_learnable_resources_on_user_id"
   end
 
-  create_table "learning_sessions", force: :cascade do |t|
-    t.jsonb "data"
-    t.bigint "user_id", null: false
-    t.bigint "learnable_resource_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["learnable_resource_id"], name: "index_learning_sessions_on_learnable_resource_id"
-    t.index ["user_id"], name: "index_learning_sessions_on_user_id"
-  end
-
   create_table "question_results", force: :cascade do |t|
     t.jsonb "data"
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
-    t.bigint "learning_session_id"
+    t.bigint "study_session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["learning_session_id"], name: "index_question_results_on_learning_session_id"
     t.index ["question_id"], name: "index_question_results_on_question_id"
+    t.index ["study_session_id"], name: "index_question_results_on_study_session_id"
     t.index ["user_id"], name: "index_question_results_on_user_id"
   end
 
@@ -71,6 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_220247) do
     t.index ["user_id"], name: "index_quizzes_on_user_id"
   end
 
+  create_table "study_sessions", force: :cascade do |t|
+    t.jsonb "data"
+    t.bigint "user_id", null: false
+    t.bigint "learnable_resource_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learnable_resource_id"], name: "index_study_sessions_on_learnable_resource_id"
+    t.index ["user_id"], name: "index_study_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "username", null: false
@@ -80,12 +80,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_220247) do
   end
 
   add_foreign_key "learnable_resources", "users"
-  add_foreign_key "learning_sessions", "learnable_resources"
-  add_foreign_key "learning_sessions", "users"
-  add_foreign_key "question_results", "learning_sessions"
   add_foreign_key "question_results", "questions"
+  add_foreign_key "question_results", "study_sessions"
   add_foreign_key "question_results", "users"
   add_foreign_key "questions", "learnable_resources"
   add_foreign_key "questions", "users"
   add_foreign_key "quizzes", "users"
+  add_foreign_key "study_sessions", "learnable_resources"
+  add_foreign_key "study_sessions", "users"
 end

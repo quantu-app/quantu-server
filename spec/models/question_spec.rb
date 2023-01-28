@@ -26,7 +26,7 @@ RSpec.describe Question, type: :model do
   context 'relations' do
     it { should belong_to(:user) }
     it { should belong_to(:learnable_resource) }
-    it { should have_one(:learnable) }
+    it { should have_one(:quiz) }
     it { should have_many(:question_results).dependent(:destroy) }
   end
 end

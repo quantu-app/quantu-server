@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LearningSession, type: :model do
+RSpec.describe StudySession, type: :model do
   context 'schema' do
     it { should have_db_column(:data).of_type(:jsonb) }
     it { should have_db_column(:learnable_resource_id).of_type(:integer) }

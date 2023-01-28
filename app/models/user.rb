@@ -15,4 +15,5 @@ class User < ApplicationRecord
   has_many :quizzes, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :learnable_resources, dependent: :destroy
+  has_many :study_sessions, dependent: :destroy
 end

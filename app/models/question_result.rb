@@ -4,5 +4,5 @@ class QuestionResult < ApplicationRecord
   # relations
   belongs_to :user
   belongs_to :question
-  belongs_to :learning_session
+  belongs_to :study_session
 end

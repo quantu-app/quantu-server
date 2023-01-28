@@ -15,5 +15,5 @@ class Quiz < ApplicationRecord
   belongs_to :user
   has_one :learnable_resource, as: :learnable, dependent: :destroy
   has_many :questions, through: :learnable_resource, dependent: :destroy
-  has_many :learning_sessions, as: :learnable, dependent: :destroy
+  has_many :study_sessions, through: :learnable_resource, source: :learnable, source_type: 'Quiz', dependent: :destroy
 end
