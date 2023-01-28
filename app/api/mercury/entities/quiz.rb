@@ -9,9 +9,9 @@ module Mercury
 
       expose :id, documentation: { desc: 'ID', type: 'Integer', required: true }
       expose :user_id, documentation: { type: 'Integer', desc: 'User Id', required: true }
-      expose :learnable_resource_id, proc: proc { |r, _options|
-        r.learnable_resource.id
-      }, documentation: { type: 'Integer', desc: 'Learnable Resource Id', required: true }
+      expose :learnable_resource_type, proc: proc { |_m, _o|
+                                               'Quiz'
+                                             }, documentation: { type: 'String', values: %w[Quiz], desc: 'Learnable Resource Id', required: true }
       expose :name, documentation: { desc: 'Name', type: 'String', required: true }
       expose :uri, documentation: { desc: 'URI', type: 'String', format: 'uri', required: true }
 
