@@ -24,7 +24,7 @@ module Mercury
                ]
           get do
             authorize(::Question, :index?)
-            @questions = @quiz.questions.includes([:learnable_resource]).all
+            @questions = @quiz.questions.includes(learnable_resource: [:learnable]).all
             present(@questions, with: Mercury::Entities::Question)
           end
 
