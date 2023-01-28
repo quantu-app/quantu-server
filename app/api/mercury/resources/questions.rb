@@ -42,7 +42,14 @@ module Mercury
           end
           post do
             authorize(::Question, :create?)
-            @question = @quiz.questions.new(params.merge(user: current_user))
+            @question = @quiz.questions.new({
+                                              user: current_user,
+                                              name: params[:name],
+                                              data: params[:data],
+                                              question_type: params[:question_type],
+                                              learnable_resource: @quiz.learnable_resource,
+                                              item_order_position: params[:item_order_position]
+                                            })
 
             if @question.save
               present(@question, with: Mercury::Entities::Question, status: 201)
@@ -84,7 +91,7 @@ module Mercury
           patch ':id' do
             @question = @quiz.questions.find(params[:id])
             authorize(@question, :update?)
-            if @question.update(params.except(:id))
+            if @question.update(params.except(:id, :quiz_id))
               present(@question, with: Mercury::Entities::Question)
             else
               error!({ errors: @question.errors.full_messages }, 422)
@@ -146,7 +153,7 @@ module Mercury
              ]
         get do
           authorize(::Question, :index?)
-          @questions = current_user.questions.all
+          @questions = current_user.questions.includes([:learnable_resource]).all
           present(@questions, with: Mercury::Entities::Question)
         end
       end
