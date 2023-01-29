@@ -15,7 +15,7 @@ gem 'ranked-model'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 6.0.2'
 
 # api
 gem 'grape'
@@ -68,8 +68,8 @@ end
 group :test do
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'shoulda-matchers', '~> 5.0'
+  gem 'faker', '~> 3.1.0'
+  gem 'shoulda-matchers', '~> 5.3.0'
 
   gem 'coveralls_reborn', '~> 0.26.0', require: false
   gem 'simplecov-lcov', '~> 0.8.0', require: false
