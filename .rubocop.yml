@@ -13,6 +13,10 @@ Metrics/BlockLength:
     - namespace
     - describe
 
+Metrics/MethodLength:
+  AllowedMethods:
+    - change
+
 Metrics/ClassLength:
   CountAsOne:
     - array

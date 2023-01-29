@@ -22,15 +22,17 @@ RSpec.describe 'Questions API', type: :request do
     }
   end
   let(:quiz) do
-    create(:quiz, user:)
+    Quiz.create!(user:, name: 'Test Quiz 1')
   end
   let(:quiz2) do
     create(:quiz, user: user2)
   end
   describe 'list' do
     it 'get all questions that belong a quiz' do
-      user_questions = create_list(:question, 2, user:, quiz:)
-      user2_questions = create_list(:quiz, 3, user: user2)
+      user_questions = [
+        Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card'),
+        Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card')
+      ]
 
       get("/api/quizzes/#{quiz.id}/questions", headers:, as: :json)
 
@@ -40,7 +42,11 @@ RSpec.describe 'Questions API', type: :request do
     end
 
     it 'get all questions that belong a user' do
-      user_questions = create_list(:question, 2, user:, quiz:)
+      quiz = Quiz.create!(user:, name: 'Test Quiz 1')
+      user_questions = [
+        Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card'),
+        Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card')
+      ]
 
       get('/api/questions', headers:, as: :json)
 

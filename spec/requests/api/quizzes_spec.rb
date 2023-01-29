@@ -71,9 +71,9 @@ RSpec.describe 'Quizzes API', type: :request do
     end
   end
 
-  describe "delete" do
+  describe 'delete' do
     it 'deletes a quiz that belongs to a user' do
-      quiz = create(:quiz, user: user)
+      quiz = create(:quiz, user:)
       original_id = quiz.id
 
       delete("/api/quizzes/#{quiz.id}", headers: headers, as: :json)

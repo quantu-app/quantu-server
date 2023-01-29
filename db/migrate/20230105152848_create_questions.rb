@@ -3,15 +3,16 @@
 class CreateQuestions < ActiveRecord::Migration[7.0]
   def change
     create_table :questions do |t|
-      t.references :user, null: false, foreign_key: true
-      t.references :quiz, null: false, foreign_key: true
-      
+      # attribs
       t.string :name, null: false
       t.string :uri, null: false
       t.string :question_type, null: false
       t.integer :item_order
-
       t.jsonb :data
+
+      # relations
+      t.references :user, null: false, foreign_key: true
+      t.references :learnable_resource, null: false, foreign_key: true
 
       t.timestamps
     end
