@@ -69,7 +69,7 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'shoulda-matchers', '~> 5.0'
+  gem 'shoulda-matchers', '~> 5.3'
 
   gem 'coveralls_reborn', '~> 0.26.0', require: false
   gem 'simplecov-lcov', '~> 0.8.0', require: false
