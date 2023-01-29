@@ -16,7 +16,11 @@ module Mercury
              ]
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
-                                 documentation: { param_type: 'body' }
+                                 documentation: {
+                                   type: 'Integer',
+                                   desc: 'Question ID',
+                                   required: true
+                                 }
         end
         get do
           authorize(::QuestionResult, :index?)
@@ -34,9 +38,14 @@ module Mercury
              ]
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
-                                 documentation: { param_type: 'body' }
+                                 documentation: {
+                                   type: 'Integer',
+                                   desc: 'Question ID',
+                                   param_type: 'body',
+                                   required: true
+                                 }
           optional :study_session_id, type: Integer, desc: 'Learning Session ID'
-          requires :data, type: JSON, documentation: { param_type: 'body' }
+          requires :data, type: JSON, documentation: { param_type: 'body', type: 'object' }
         end
         post do
           authorize(::QuestionResult, :create?)
@@ -63,7 +72,11 @@ module Mercury
              ]
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
-                                 documentation: { param_type: 'body' }
+                                 documentation: {
+                                   type: 'Integer',
+                                   desc: 'Question ID',
+                                   required: true
+                                 }
           requires :id, type: Integer
         end
         get ':id' do
@@ -81,7 +94,11 @@ module Mercury
              ]
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
-                                 documentation: { param_type: 'body' }
+                                 documentation: {
+                                   type: 'Integer',
+                                   desc: 'Question ID',
+                                   required: true
+                                 }
           requires :id, type: Integer
         end
         delete ':id' do
@@ -100,7 +117,11 @@ module Mercury
              ]
         params do
           requires :question_id, type: Integer, desc: 'Question ID', allow_blank: false,
-                                 documentation: { param_type: 'body' }
+                                 documentation: {
+                                   type: 'Integer',
+                                   desc: 'Question ID',
+                                   required: true
+                                 }
           requires :id, type: Integer
         end
         delete do
