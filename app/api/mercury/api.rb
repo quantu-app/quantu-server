@@ -16,6 +16,7 @@ module Mercury
     mount Mercury::Resources::Quizzes
     mount Mercury::Resources::Questions
     mount Mercury::Resources::QuestionResults
+    mount Mercury::Resources::StudySessions
 
     if Rails.env.development?
       add_swagger_documentation(mount_path: '/docs',
