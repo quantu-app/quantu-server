@@ -10,13 +10,16 @@ module QuantU
         step :login_as_user
 
         def login_as_user(input)
-          @user = User.find_by(email: input[:email])
-          if @user&.authenticate(input[:password])
-            token = QuantU::Utils::JsonWebToken.encode({ user_id: @user.id })
-            exp_time = QuantU::Utils::JsonWebToken.create_expires_at
-            Success({ token:, expires_at: exp_time })
+          user = User.find_by(email: input[:email])
+
+          if user&.authenticate(input[:password])
+            token = Core::Utils::JsonWebToken.encode({ user_id: user.id })
+            exp_time = Core::Utils::JsonWebToken.create_expires_at
+
+            Success(Entities::LoginToken.new(token:,
+                                             expires_at: exp_time.to_s))
           else
-            Failure({ errors: ['authentication failed'] })
+            Failure(Core::Entities::StringErrorsList.new(errors: ['authentication failed']))
           end
         end
       end

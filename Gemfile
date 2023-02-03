@@ -27,6 +27,7 @@ gem 'rack-cors'
 
 # code structure
 gem 'dry-monads'
+gem 'dry-struct'
 gem 'dry-transaction'
 gem 'dry-types'
 gem 'dry-validation'
