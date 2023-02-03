@@ -12,7 +12,7 @@ RSpec.describe 'Question Results API', type: :request do
     )
   end
   let(:jwt_token) do
-    QuantU::Utils::JsonWebToken.encode({ user_id: user.id })
+    QuantU::Core::Utils::JsonWebToken.encode({ user_id: user.id })
   end
   let(:headers) do
     {
@@ -24,19 +24,23 @@ RSpec.describe 'Question Results API', type: :request do
     create(:quiz, user:)
   end
   let(:question) do
-    quez.questions.create!(user:,
-                           name: 'Question Results Test Q',
-                           uri: 'question-results-test-question')
+    lr = quiz.learnable_resource
+    lr.questions.create!(user:,
+                         name: 'Question Results Test Q',
+                         question_type: 'flash_card',
+                         uri: 'question-results-test-question')
   end
   describe 'list' do
-    it 'get all questions that belong a quiz' do
-      user_questions = create_list(:question, 2, user:, quiz:)
+    it 'get all questions results that belong a question' do
+      question_results = [
+        QuestionResult.create!(user:, question:),
+        QuestionResult.create!(user:, question:)
+      ]
 
-      get("/api/quizzes/#{quiz.id}/questions", headers:, as: :json)
+      get("/api/question_results?question_id=#{question.id}", headers:, as: :json)
 
       expect(response).to have_http_status(:ok)
       expect(json.length).to be(2)
-      expect(json.pluck('name')).to match_array(user_questions.pluck('name'))
     end
 
     # it 'get all question results that belong a user' do

@@ -12,17 +12,14 @@ RSpec.describe 'API Auth login', type: :request do
         password_confirmation: '123456'
       )
     end
-    let(:headers) {
+    let(:headers) do
       {
-        "Content-Type"=> "application/json"
+        'Content-Type' => 'application/json'
       }
-    }
+    end
 
     it 'logs in a user when given correct email and password' do
-      post('/api/auth/login', params: {
-        email: user.email,
-        password: '123456'
-      }, headers: headers, as: :json)
+      post('/api/auth/login', params: { email: user.email, password: '123456' }, headers:, as: :json)
       expect(response).to have_http_status(:created)
       expect(json['token']).to_not be_empty
       expect(json['expires_at']).to_not be_empty
@@ -30,14 +27,14 @@ RSpec.describe 'API Auth login', type: :request do
 
     it 'fails to login a user when given an incorrect email or password' do
       # invalid email
-      post('/api/auth/login', params: { email: 'not-an-email@test.com', password: '123456' }, headers: headers, as: :json)
+      post('/api/auth/login', params: { email: 'not-an-email@test.com', password: '123456' }, headers:,
+                              as: :json)
 
       expect(response).to have_http_status(:unauthorized)
       expect(json['errors']).to eq(['authentication failed'])
 
       # invalid password
-      post('/api/auth/login', params: { email: user.email, password: '654321' }, headers: headers, as: :json)
-
+      post('/api/auth/login', params: { email: user.email, password: '654321' }, headers:, as: :json)
       expect(response).to have_http_status(:unauthorized)
       expect(json['errors']).to eq(['authentication failed'])
     end

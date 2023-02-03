@@ -25,7 +25,7 @@ module Mercury
             end
 
             result.failure do |error|
-              error!(error, 401)
+              error!({ errors: error.errors }, 401)
             end
           end
         end

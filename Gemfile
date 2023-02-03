@@ -14,7 +14,7 @@ gem 'pg', '~> 1.1'
 gem 'ranked-model'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-# Use the Puma web server [https://github.com/puma/puma]
+# server
 gem 'puma', '~> 6.0.2'
 
 # api

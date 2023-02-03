@@ -13,7 +13,7 @@ RSpec.describe 'Questions API', type: :request do
   end
   let(:user2) { create(:user, username: 'seconduser3') }
   let(:jwt_token) do
-    QuantU::Utils::JsonWebToken.encode({ user_id: user.id })
+    QuantU::Core::Utils::JsonWebToken.encode({ user_id: user.id })
   end
   let(:headers) do
     {
@@ -33,8 +33,7 @@ RSpec.describe 'Questions API', type: :request do
         Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card'),
         Question.create!(user:, learnable_resource: quiz.learnable_resource, question_type: 'flash_card')
       ]
-
-      get("/api/quizzes/#{quiz.id}/questions", headers:, as: :json)
+      get("/api/questions?quiz_id=#{quiz.id}", headers:, as: :json)
 
       expect(response).to have_http_status(:ok)
       expect(json.length).to be(2)
@@ -59,7 +58,8 @@ RSpec.describe 'Questions API', type: :request do
 
   describe 'create' do
     it 'creates a new question when given valid data' do
-      post("/api/quizzes/#{quiz.id}/questions", params: {
+      post('/api/questions', params: {
+             quiz_id: quiz.id,
              name: 'Test Question',
              data: {},
              question_type: 'flash_card'
@@ -76,7 +76,7 @@ RSpec.describe 'Questions API', type: :request do
     it 'returns a question' do
       question = create(:question, user:, quiz:)
 
-      get("/api/quizzes/#{quiz.id}/questions/#{question.id}", headers:, as: :json)
+      get("/api/questions/#{question.id}?quiz_id=#{quiz.id}", headers:, as: :json)
 
       expect(response).to have_http_status(:ok)
       expect(json['id']).to eq(question.id)
@@ -86,7 +86,7 @@ RSpec.describe 'Questions API', type: :request do
       quiz2 = create(:quiz, user: user2)
       question2 = create(:question, user: user2, quiz: quiz2)
 
-      get("/api/quizzes/#{quiz2.id}/questions/#{question2.id}", headers:, as: :json)
+      get("/api/questions/#{question2.id}?quiz_id=#{quiz2.id}", headers:, as: :json)
 
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key('errors')
@@ -102,8 +102,9 @@ RSpec.describe 'Questions API', type: :request do
                         user:,
                         quiz:)
 
-      patch("/api/quizzes/#{quiz.id}/questions/#{question.id}",
+      patch("/api/questions/#{question.id}",
             params: {
+              quiz_id: quiz.id,
               name: 'another test name',
               data: { hello: 'world' }
             }, headers:, as: :json)
@@ -114,11 +115,11 @@ RSpec.describe 'Questions API', type: :request do
   end
 
   describe 'delete' do
-    it 'deletes a quiz that belongs to a user' do
+    it 'deletes a question that belongs to a user' do
       question = create(:question, user:, quiz:)
       original_id = question.id
 
-      delete("/api/quizzes/#{quiz.id}/questions/#{question.id}", headers:, as: :json)
+      delete("/api/questions/#{question.id}?quiz_id=#{quiz.id}", headers:, as: :json)
       expect(response).to have_http_status(:no_content)
       expect do
         Question.find(original_id)
@@ -126,8 +127,8 @@ RSpec.describe 'Questions API', type: :request do
     end
 
     it 'will not delete a question that belongs to another user' do
-      other_users_quiz = create(:question, user: user2, quiz: quiz2)
-      delete("/api/quizzes/#{other_users_quiz.id}", headers:, as: :json)
+      other_users_question = create(:question, user: user2, quiz: quiz2)
+      delete("/api/questions/#{other_users_question.id}?quiz_id=#{quiz2.id}", headers:, as: :json)
       expect(response).to have_http_status(:not_found)
     end
   end
