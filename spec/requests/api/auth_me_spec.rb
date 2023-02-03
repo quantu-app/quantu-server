@@ -13,7 +13,7 @@ RSpec.describe 'API Auth me', type: :request do
       )
     end
     let(:jwt_token) do
-      QuantU::Utils::JsonWebToken.encode({ user_id: user.id })
+      QuantU::Core::Utils::JsonWebToken.encode({ user_id: user.id })
     end
 
     it 'shows the current user if provided a valid jwt token' do
@@ -25,7 +25,7 @@ RSpec.describe 'API Auth me', type: :request do
     end
 
     it 'returns unauthorized if provided an invalid jwt token' do
-      get('/api/auth/me', headers: { 'Authorization' => 'Bearer invalid' }, as: :json )
+      get('/api/auth/me', headers: { 'Authorization' => 'Bearer invalid' }, as: :json)
 
       expect(response).to have_http_status(:unauthorized)
     end

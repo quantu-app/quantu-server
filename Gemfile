@@ -14,7 +14,7 @@ gem 'pg', '~> 1.1'
 gem 'ranked-model'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-# Use the Puma web server [https://github.com/puma/puma]
+# server
 gem 'puma', '~> 6.0.2'
 
 # api
@@ -24,6 +24,13 @@ gem 'jbuilder'
 gem 'jwt'
 gem 'pundit'
 gem 'rack-cors'
+
+# code structure
+gem 'dry-monads'
+gem 'dry-struct'
+gem 'dry-transaction'
+gem 'dry-types'
+gem 'dry-validation'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

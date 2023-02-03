@@ -7,20 +7,26 @@ module Mercury
         desc 'Login and return a new JWT access token',
              success: { code: 200, model: Mercury::Entities::Token },
              failure: [
-               { code: 401, model: Mercury::Entities::ErrorResponse }
+               { code: 401, model: Mercury::Entities::ErrorResponse },
+               { code: 422, model: Mercury::Entities::ErrorResponse }
              ]
         params do
           requires :email, type: String, desc: 'User email', documentation: { param_type: 'body' }
           requires :password, type: String, desc: 'User Password', documentation: { param_type: 'body' }
         end
         post '/login' do
-          @user = User.find_by(email: params[:email])
-          if @user&.authenticate(params[:password])
-            token = QuantU::Utils::JsonWebToken.encode({ user_id: @user.id })
-            exp_time = QuantU::Utils::JsonWebToken.create_expires_at
-            present({ token:, expires_at: exp_time }, with: Mercury::Entities::Token)
-          else
-            error!({ errors: ['authentication failed'] }, 401)
+          QuantU::Users::Commands::Login.new.call(params) do |result|
+            result.success do |token_info|
+              present(token_info, with: Mercury::Entities::Token)
+            end
+
+            result.failure :validate do |validation|
+              error!({ errors: validation.to_a.map(&:to_h) }, 422)
+            end
+
+            result.failure do |error|
+              error!({ errors: error.errors }, 401)
+            end
           end
         end
 
