@@ -25,6 +25,12 @@ gem 'jwt'
 gem 'pundit'
 gem 'rack-cors'
 
+# code structure
+gem 'dry-monads'
+gem 'dry-transaction'
+gem 'dry-types'
+gem 'dry-validation'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
