@@ -16,7 +16,12 @@ module Mercury
       end
 
       params do
-        requires :quiz_id, type: Integer
+        requires :quiz_id, type: Integer, documentation: {
+          type: 'Integer',
+          desc: 'Quiz ID',
+          param_type: 'query',
+          required: true
+        }
       end
       namespace :questions do
         before { authenticate! }
