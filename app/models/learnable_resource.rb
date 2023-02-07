@@ -5,5 +5,6 @@ class LearnableResource < ApplicationRecord
   belongs_to :user
   belongs_to :learnable, polymorphic: true
   has_many :questions, dependent: :destroy
+  has_many :study_sessions, dependent: :destroy
   has_many :question_results, through: :questions
 end
