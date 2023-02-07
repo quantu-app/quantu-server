@@ -21,6 +21,8 @@ RSpec.describe Quiz, type: :model do
       it { should belong_to(:user) }
       it { should have_one(:learnable_resource).dependent(:destroy) }
       it { should have_many(:questions).dependent(:destroy) }
+      it { should have_many(:study_sessions).dependent(:destroy) }
+      it { should have_many(:question_results).dependent(:destroy) }
     end
   end
 end

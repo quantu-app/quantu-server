@@ -17,8 +17,9 @@ RSpec.describe LearnableResource, type: :model do
     context 'relations' do
       it { should belong_to(:user) }
       it { should belong_to(:learnable) }
-      it { should have_many(:questions) }
+      it { should have_many(:questions).dependent(:destroy) }
       it { should have_many(:question_results).through(:questions) }
+      it { should have_many(:study_sessions).dependent(:destroy) }
     end
   end
 end

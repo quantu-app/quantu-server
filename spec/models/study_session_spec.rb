@@ -16,7 +16,7 @@ RSpec.describe StudySession, type: :model do
     context 'relations' do
       it { should belong_to(:user) }
       it { should belong_to(:learnable_resource) }
-      it { should have_many(:question_results) }
+      it { should have_many(:question_results).dependent(:destroy) }
     end
   end
 end
