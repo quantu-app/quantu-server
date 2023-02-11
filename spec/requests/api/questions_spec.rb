@@ -69,7 +69,7 @@ RSpec.describe 'Questions API', type: :request do
       expect(json['name']).to eq('Test Question')
       expect(json['uri']).to eq('test-question')
       expect(json['learnable_resource_type']).to eq('Quiz')
-      expect(json['learnable_resource']).to eq_with_indifferent_access({ id: quiz.id, name: quiz.name, uri: quiz.uri })
+      expect(json['learnable_resource_id']).to eq(quiz.id)
       expect(json['question_type']).to eq('flash_card')
     end
   end
@@ -81,12 +81,12 @@ RSpec.describe 'Questions API', type: :request do
       get("/api/questions/#{question.id}?quiz_id=#{quiz.id}", headers:, as: :json)
 
       expect(response).to have_http_status(:ok)
-      expect(json.keys).to match_array(%w[id name uri learnable_resource_type learnable_resource data item_order
+      expect(json.keys).to match_array(%w[id name uri learnable_resource_type learnable_resource_id data item_order
                                           question_type user_id created_at updated_at])
       expect(json['id']).to eq(question.id)
       expect(json['name']).to eq(question.name)
       expect(json['learnable_resource_type']).to eq('Quiz')
-      expect(json['learnable_resource'].keys).to match_array(%w[id name uri])
+      expect(json['learnable_resource_id']).to eq(quiz.id)
     end
 
     it 'returns an error when trying to access a question that does not belong to the user' do
@@ -97,7 +97,7 @@ RSpec.describe 'Questions API', type: :request do
 
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key('errors')
-      expect(json['errors']).to eq(['resource not found'])
+      expect(json['errors'].first).to match(/\ACouldn't find Quiz/)
     end
   end
 

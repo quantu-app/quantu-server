@@ -14,12 +14,8 @@ module Mercury
       expose :learnable_resource_type, proc: proc { |model, _opts|
         model.learnable_resource.learnable_type
       }, documentation: { type: 'string', values: %w[Quiz], required: true, desc: 'Type of learnable resource the Question belongs to' }
-      expose :learnable_resource, proc: proc { |model, _opts|
-        learnable_model = model.learnable_resource.learnable
-        case model.learnable_resource.learnable_type.to_s
-        when 'Quiz'
-          ::Mercury::Entities::Quiz.represent(learnable_model, only: %w[id name uri])
-        end
+      expose :learnable_resource_id, proc: proc { |model, _opts|
+        model.learnable_resource.learnable.id
       }, documentation: { type: 'Integer', desc: 'Learnable Resource Id', required: true }
       expose :question_type,
              documentation: { type: 'string', values: %w[flash_card], required: true, desc: 'Type of Question' }
