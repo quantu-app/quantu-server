@@ -11,7 +11,10 @@ module Mercury
       expose :user_id, documentation: { type: 'Integer', desc: 'User Id', required: true }
       expose :learnable_resource_type, proc: proc { |model, _opts|
         model.learnable_resource.learnable_type
-      }, documentation: { type: 'string', values: %w[Quiz], required: true, desc: 'Type of learnable resource the Question belongs to' }
+      }, documentation: { type: 'string',
+                          values: %w[Quiz],
+                          required: true,
+                          desc: 'Type of learnable resource the Question belongs to' }
       expose :learnable_resource, proc: proc { |model, _opts|
         learnable_model = model.learnable_resource.learnable
         case model.learnable_resource.learnable_type.to_s
