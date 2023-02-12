@@ -27,7 +27,7 @@ module Mercury
         before { authenticate! }
         after { verify_authorized }
         before do
-          @quiz = current_user.quizzes.find(params[:quiz_id])
+          @quiz = current_user.quizzes.includes(learnable_resource: [:learnable]).find(params[:quiz_id])
           authorize(@quiz, :update?)
         end
 

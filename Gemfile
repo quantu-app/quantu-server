@@ -55,7 +55,6 @@ group :development, :test do
   gem 'rswag-ui'
 
   # performance  tools
-  gem 'bullet'
 end
 
 group :development do

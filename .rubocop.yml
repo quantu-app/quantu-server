@@ -12,6 +12,7 @@ Metrics/BlockLength:
   AllowedMethods:
     - namespace
     - describe
+    - configure
 
 Metrics/MethodLength:
   AllowedMethods:
