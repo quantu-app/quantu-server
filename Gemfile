@@ -10,7 +10,7 @@ gem 'rails', '~> 7.0.4'
 # data
 gem 'bcrypt', '~> 3.1.7'
 gem 'email_validator'
-gem 'pg', '~> 1.1'
+gem 'pg', '~> 1.4'
 gem 'ranked-model'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
