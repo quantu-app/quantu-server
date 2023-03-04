@@ -1,0 +1,6 @@
+/.devcontainer
+/.github
+/coverage
+/helm
+/log
+/postgresql

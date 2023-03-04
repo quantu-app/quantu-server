@@ -46,3 +46,11 @@ rspec
 > rails c
 irb(main)> User.create!(username: "nathanfaucett", email: "nathanfaucett@gmail.com", password: "password", password_confirmation: "password")
 ```
+
+## Deploy
+
+```bash
+docker build -t ghcr.io/quantu-app/quantu-server:latest .
+docker push ghcr.io/quantu-app/quantu-server:latest
+helm upgrade quantu-server helm/quantu-server -n api --install -f values.yaml --set image.hash=\"$(docker inspect --format='{{index .Id}}' ghcr.io/quantu-app/quantu-server:latest)\"
+```

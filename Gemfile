@@ -24,6 +24,7 @@ gem 'jbuilder'
 gem 'jwt'
 gem 'pundit'
 gem 'rack-cors'
+gem 'rswag-ui'
 
 # code structure
 gem 'dry-monads'
@@ -52,7 +53,6 @@ group :development, :test do
   gem 'grape-swagger-entity', '~> 0.3'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 6.0.0'
-  gem 'rswag-ui'
 
   # performance  tools
 end
