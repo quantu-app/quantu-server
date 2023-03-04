@@ -39,3 +39,5 @@
 # env files
 .env*
 !.env.template
+
+/values.yaml
