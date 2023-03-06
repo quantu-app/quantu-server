@@ -15,7 +15,7 @@ gem 'ranked-model'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # server
-gem 'puma', '~> 6.1.0'
+gem 'puma', '~> 6.1.1'
 
 # api
 gem 'grape'
